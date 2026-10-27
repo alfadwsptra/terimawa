@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TerimaWablast — Dashboard Premium</title>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif;}
+        :root{
+            --bg-dark:#0a0a0f;
+            --bg-card:#12121a;
+            --neon-pink:#ff2e88;
+            --neon-blue:#00d9ff;
+            --neon-purple:#8b5cf6;
+            --text-light:#e5e5e5;
+            --success:#10b981;
+        }
+        body{background:var(--bg-dark);color:var(--text-light);min-height:100vh;line-height:1.6;padding-bottom:80px;}
+        .neon-text{background:linear-gradient(90deg,var(--neon-pink),var(--neon-blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+        header{padding:1.5rem;text-align:center;border-bottom:1px solid rgba(139,92,246,0.2);}
+        header h1{font-size:1.8rem;}
+        .banner{text-align:center;padding:1.5rem 1rem;background:linear-gradient(135deg,rgba(139,92,246,0.1),rgba(255,46,136,0.05));}
+        .container{max-width:450px;margin:0 auto;padding:1rem;}
+        .card{background:var(--bg-card);border-radius:16px;padding:1.3rem;margin-bottom:1rem;border:1px solid rgba(139,92,246,0.15);}
+        .card h3{margin-bottom:1rem;color:var(--neon-purple);font-size:1.1rem;}
+        .stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;}
+        .stat-item{text-align:center;padding:.7rem;background:rgba(139,92,246,0.08);border-radius:10px;}
+        .stat-num{font-size:1.2rem;font-weight:bold;color:var(--neon-blue);}
+        input{width:100%;padding:.75rem 1rem;margin:.4rem 0;border-radius:8px;background:#1a1a25;border:1px solid rgba(139,92,246,0.3);color:white;outline:none;}
+        button{width:100%;padding:.85rem;border-radius:8px;border:none;background:linear-gradient(90deg,var(--neon-pink),var(--neon-purple));color:white;font-weight:bold;font-size:.95rem;cursor:pointer;margin-top:.4rem;}
+        .btn-outline{background:transparent;border:1px solid var(--neon-blue);color:var(--neon-blue);}
+        .btn-link{background:none;border:none;color:var(--neon-blue);text-decoration:underline;padding:0;font-size:.9rem;width:auto;}
+        .saldo-box{text-align:center;padding:.8rem 0;}
+        .saldo{font-size:1.8rem;font-weight:bold;color:var(--neon-blue);}
+        .badge{display:inline-block;padding:.25rem .6rem;border-radius:12px;font-size:.75rem;}
+        .badge-info{background:rgba(0,217,255,.15);color:var(--neon-blue);}
+        .hidden{display:none !important;}
+        .toggle-text{text-align:center;margin-top:.8rem;font-size:.9rem;color:#9ca3af;}
+        .menu{display:flex;justify-content:space-around;position:fixed;bottom:0;left:0;right:0;background:var(--bg-card);padding:.6rem 0;border-top:1px solid rgba(139,92,246,0.2);z-index:99;}
+        .menu a{text-align:center;color:#9ca3af;text-decoration:none;font-size:.75rem;}
+        .menu a.active{color:var(--neon-blue);}
+        .progress-bar{height:7px;background:#1f1f2e;border-radius:4px;overflow:hidden;margin:.5rem 0;}
+        .progress-fill{height:100%;background:linear-gradient(90deg,var(--neon-pink),var(--neon-blue));width:0%;border-radius:4px;}
+        .telegram-box{background:rgba(0,136,204,.1);border:1px solid rgba(0,136,204,.3);border-radius:10px;padding:1rem;text-align:center;margin-top:.5rem;}
+        .telegram-box p{font-size:.85rem;color:#9ca3af;margin-bottom:.5rem;}
+        .telegram-link{display:block;color:#0088cc;font-weight:bold;text-decoration:none;padding:.7rem;background:rgba(0,136,204,.15);border-radius:8px;margin-bottom:.5rem;}
+        .telegram-link:hover{background:rgba(0,136,204,.25);}
+    </style>
+</head>
+<body>
+
+<header>
+    <h1 class="neon-text">✨ TerimaWablast ✨</h1>
+    <p style="color:#9ca3af;font-size:.85rem;">Dashboard Premium — Satu tempat, semua kendali</p>
+</header>
+
+<!-- ============= HALAMAN LOGIN ============= -->
+<div id="halamanLogin" class="container">
+    <div class="banner">
+        <h2>Selamat Datang 👋</h2>
+        <p>Masuk untuk mengakses dasbor</p>
+    </div>
+    <div class="card">
+        <h3>🔐 Masuk Akun</h3>
+        <input type="email" id="inputEmail" placeholder="📧 Email">
+        <input type="password" id="inputSandi" placeholder="🔑 Kata Sandi">
+        <button onclick="klikMasuk()">Masuk Sekarang</button>
+        <div class="toggle-text">
+            Belum punya akun?
+            <button class="btn-link" onclick="bukaDaftar()">Daftar di sini</button>
+        </div>
+    </div>
+</div>
+
+<!-- ============= HALAMAN DAFTAR ============= -->
+<div id="halamanDaftar" class="container hidden">
+    <div class="banner">
+        <h2>Buat Akun Baru 📝</h2>
+        <p>Bergabunglah bersama kami</p>
+    </div>
+    <div class="card">
+        <h3>📋 Form Pendaftaran</h3>
+        <input type="text" id="namaLengkap" placeholder="👤 Nama Lengkap">
+        <input type="email" id="emailDaftar" placeholder="📧 Email">
+        <input type="tel" id="waDaftar" placeholder="📱 Nomor WhatsApp">
+        <input type="password" id="sandiDaftar" placeholder="🔑 Kata Sandi">
+        <button onclick="klikDaftar()">Daftar Sekarang</button>
+        <div class="toggle-text">
+            Sudah punya akun?
+            <button class="btn-link" onclick="bukaLogin()">Masuk di sini</button>
+        </div>
+    </div>
+</div>
+
+<!-- ============= HALAMAN UTAMA ============= -->
+<div id="halamanUtama" class="hidden">
+    <div class="banner">
+        <h2>Selamat Datang! ✨</h2>
+        <p style="color:#9ca3af;font-size:.85rem;">Pengguna Terdaftar • <span id="jam"></span></p>
+    </div>
+
+    <div class="container">
+        <!-- SALDO -->
+        <div class="card saldo-box">
+            <p style="color:#9ca3af;font-size:.85rem;">Saldo Tersedia</p>
+            <p class="saldo">Rp 0</p>
+            <p style="font-size:.8rem;color:#9ca3af;">Minimal Penarikan: Rp 15.000</p>
+        </div>
+
+        <!-- STATISTIK -->
+        <div class="card">
+            <h3>📈 Ringkasan Aktivitas</h3>
+            <div class="stat-grid">
+                <div class="stat-item">
+                    <p class="stat-num">0</p>
+                    <p style="font-size:.75rem;color:#9ca3af;">Pesan</p>
+                </div>
+                <div class="stat-item">
+                    <p class="stat-num">0</p>
+                    <p style="font-size:.75rem;color:#9ca3af;">Referral</p>
+                </div>
+                <div class="stat-item">
+                    <p class="stat-num">Rp 2.500</p>
+                    <p style="font-size:.75rem;color:#9ca3af;">Rate/Chat</p>
+                </div>
+                <div class="stat-item">
+                    <p class="stat-num">Rp 0</p>
+                    <p style="font-size:.75rem;color:#9ca3af;">Pendapatan</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 💬 PAIRING VIA TELEGRAM -->
+        <div class="card">
+            <h3>💬 Hubungkan WhatsApp</h3>
+            <p style="font-size:.85rem;color:#9ca3af;margin-bottom:.8rem;">
+                Status: 
+                <span class="badge badge-info">Hubungi Admin untuk Pairing</span>
+            </p>
+            
+            <div class="telegram-box">
+                <p>📲 Klik tautan di bawah ini untuk membuka Telegram:</p>
+                
+                <!-- Link Langsung (paling penting) -->
+                <a href="https://t.me/terimawablast1" target="_blank" class="telegram-link">
+                    ✈️ Buka Telegram → t.me/terimawablast1
+                </a>
+                
+                <!-- Tombol Cadangan -->
+                <button class="btn-outline" onclick="bukaTelegram()">🔗 Atau Klik di Sini</button>
+            </div>
+        </div>
+
+        <!-- REFERAL -->
+        <div class="card">
+            <h3>👥 Program Referral</h3>
+            <p style="font-size:.85rem;color:#9ca3af;margin-bottom:.4rem;">Undang teman = Rp 50 per orang bergabung!</p>
+            <input type="text" placeholder="Link undangan muncul di sini..." readonly>
+            <button>Salin Link</button>
+            <p style="text-align:center;margin-top:.6rem;font-size:.8rem;color:#9ca3af;">0 teman bergabung</p>
+        </div>
+
+        <!-- TURNAMEN -->
+        <div class="card">
+            <h3>🏆 Turnamen Referral</h3>
+            <p style="font-size:.85rem;">🥇 Juara 1 — 1.000 referral = Rp 1.000.000</p>
+            <p style="font-size:.85rem;">🥈 Juara 2 — 500 referral = Rp 500.000</p>
+            <p style="font-size:.85rem;">🥉 Juara 3 — 200 referral = Rp 200.000</p>
+            <p style="margin-top:.6rem;font-size:.85rem;">Progres kamu: 0 / 200</p>
+            <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
+        </div>
+
+        <!-- PENARIKAN -->
+        <div class="card">
+            <h3>💸 Ajukan Penarikan</h3>
+            <input type="text" placeholder="Jumlah (contoh: 15000)">
+            <input type="text" placeholder="Nama Pemilik Rekening">
+            <input type="text" placeholder="Bank / E-Wallet">
+            <button>Request Penarikan</button>
+        </div>
+
+        <!-- KELUAR -->
+        <button class="btn-outline" style="margin-top:1rem;" onclick="keluarAkun()">🚪 Keluar dari Akun</button>
+
+        <p style="text-align:center;font-size:.75rem;color:#6b7280;margin:1.5rem 0 3rem;">
+            💡 Hubungi bantuan: <a href="https://t.me/terimawablast1" target="_blank" style="color:#0088cc;">@terimawablast1</a><br>
+            Semua transaksi diproses manual
+        </p>
+    </div>
+
+    <!-- MENU BAWAH -->
+    <div class="menu">
+        <a href="#" class="active">🏠<br><span style="font-size:.7rem;">Beranda</span></a>
+        <a href="https://t.me/terimawablast1" target="_blank">💬<br><span style="font-size:.7rem;">Pairing</span></a>
+        <a href="#">📈<br><span style="font-size:.7rem;">Statistik</span></a>
+        <a href="#">👥<br><span style="font-size:.7rem;">Referral</span></a>
+        <a href="#">🏆<br><span style="font-size:.7rem;">Turnamen</span></a>
+    </div>
+</div>
+
+<script>
+function bukaLogin(){
+    document.getElementById('halamanLogin').classList.remove('hidden');
+    document.getElementById('halamanDaftar').classList.add('hidden');
+    document.getElementById('halamanUtama').classList.add('hidden');
+}
+
+function bukaDaftar(){
+    document.getElementById('halamanLogin').classList.add('hidden');
+    document.getElementById('halamanDaftar').classList.remove('hidden');
+    document.getElementById('halamanUtama').classList.add('hidden');
+}
+
+function klikMasuk(){
+    let email = document.getElementById('inputEmail').value;
+    let sandi = document.getElementById('inputSandi').value;
+    if(email === '' || sandi === ''){
+        alert('⚠️ Isi email dan sandi dulu ya!');
+        return;
+    }
+    document.getElementById('halamanLogin').classList.add('hidden');
+    document.getElementById('halamanDaftar').classList.add('hidden');
+    document.getElementById('halamanUtama').classList.remove('hidden');
+    updateJam();
+}
+
+function klikDaftar(){
+    let nama = document.getElementById('namaLengkap').value;
+    let email = document.getElementById('emailDaftar').value;
+    let wa = document.getElementById('waDaftar').value;
+    let sandi = document.getElementById('sandiDaftar').value;
+    if(nama === '' || email === '' || wa === '' || sandi === ''){
+        alert('⚠️ Isi semua kolom dulu ya!');
+        return;
+    }
+    alert('✅ Pendaftaran berhasil! Silakan masuk ke akun kamu.');
+    bukaLogin();
+}
+
+function keluarAkun(){
+    if(confirm('Yakin ingin keluar dari akun?')){
+        bukaLogin();
+    }
+}
+
+function updateJam(){
+    const sekarang = new Date();
+    document.getElementById('jam').textContent = sekarang.toLocaleTimeString('id-ID');
+}
+setInterval(updateJam, 1000);
+
+// Fungsi buka Telegram
+function bukaTelegram(){
+    window.open('https://t.me/terimawablast1', '_blank');
+}
+</script>
+
+</body>
+</html>
+.
